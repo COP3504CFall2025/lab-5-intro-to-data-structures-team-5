@@ -38,11 +38,69 @@ public:
         array_(new T[capacity_])
     {};
 
-    ABQ(const ABQ& other);
-    ABQ& operator=(const ABQ& rhs);
-    ABQ(ABQ&& other) noexcept;
-    ABQ& operator=(ABQ&& rhs) noexcept;
-    ~ABQ() noexcept override;
+    ABQ(const ABQ& other) {
+        capacity_ = other.capacity_;
+        curr_size_ = other.curr_size_;
+        array_ = new T[capacity_];
+
+        for (size_t i = 0; i < curr_size_; i++) {
+            array_[i] = other.array_[i];
+        }
+    };
+
+    ABQ& operator=(const ABQ& rhs) {
+        if (this == &rhs) {
+            return *this;
+        }
+
+        T* new_arr = new T[rhs.capacity_];
+
+        for (size_t i = 0; i < rhs.curr_size_; i++) {
+            new_arr[i] = rhs.array_[i];
+        }
+
+        delete array_;
+        array_ = new_arr;
+        capacity_ = rhs.capacity_;
+        curr_size_ = rhs.curr_size_;
+
+        return *this;
+    };
+
+    ABQ(ABQ&& other) noexcept {
+        array_ = other.array_;
+        capacity_ = other.capacity_;
+        curr_size_ = other.curr_size_;
+
+        other.array_ = nullptr;
+        other.capacity_ = 0;
+        other.curr_size_ = 0;
+    };
+
+    ABQ& operator=(ABQ&& rhs) noexcept {
+        if (this == &rhs) {
+            return *this;
+        }
+
+        delete array_;
+
+        array_ = rhs.array_;
+        capacity_ = rhs.capacity_;
+        curr_size_ = rhs.curr_size_;
+
+        rhs.array_ = nullptr;
+        rhs.capacity_ = 0;
+        rhs.curr_size_ = 0;
+
+        return *this;
+    };
+
+    ~ABQ() noexcept override {
+        delete array_;
+        array_ = nullptr;
+        capacity_ = 0;
+        curr_size_ = 0;
+    };
 
     // Getters
     [[nodiscard]] size_t getSize() const noexcept override {
