@@ -113,7 +113,7 @@ public:
         if (curr_size_ == 0) {
             throw std::out_of_range("No elements to peek in stack.");
         }
-        return array_[curr_size_];
+        return array_[curr_size_ - 1];
     };
 
     T pop() override {
@@ -121,7 +121,7 @@ public:
             throw std::out_of_range("No elements to pop in stack.");
         }
 
-        return array_[curr_size_--];
+        return array_[--curr_size_];
     };
 
 private:

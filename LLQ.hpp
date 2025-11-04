@@ -14,15 +14,25 @@ public:
     LLQ();
 
     // Insertion
-    void enqueue(const T& item) override;
+    void enqueue(const T& item) override {
+        list.addTail(item);
+    };
 
     // Deletion
-    T dequeue() override;
+    T dequeue() override {
+        T headData = list.getHead()->data;
+        list.removeHead();
+        return headData;
+    };
 
     // Access
-    T peek() const override;
+    T peek() const override {
+        return list.getHead()->data;
+    };
 
     // Getter
-    std::size_t getSize() const noexcept override;
+    std::size_t getSize() const noexcept override {
+        return list.getCount();
+    };
 
 };
