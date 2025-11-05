@@ -17,7 +17,7 @@ class ABQ : public QueueInterface<T>{
 
     void resize() {
         T* new_data = new T[capacity_ * scale_factor_];
-        capacity_ *= 2;
+        capacity_ *= scale_factor_;
         for (size_t i = 0; i < curr_size_; i++) {
           new_data[i] = array_[i];  
         }

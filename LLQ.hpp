@@ -20,6 +20,10 @@ public:
 
     // Deletion
     T dequeue() override {
+        if (this->getSize() == 0) {
+            throw std::out_of_range("No data to dequeue.");
+        }
+
         T headData = list.getHead()->data;
         list.removeHead();
         return headData;
@@ -27,6 +31,9 @@ public:
 
     // Access
     T peek() const override {
+        if (this->getSize() == 0) {
+            throw std::out_of_range("No data in queue to peek.");
+        }
         return list.getHead()->data;
     };
 
