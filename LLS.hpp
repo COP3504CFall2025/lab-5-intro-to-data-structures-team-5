@@ -11,7 +11,7 @@ private:
     LinkedList<T> list;
 public:
     // Constructor
-    LLS(); // ?
+    LLS() = default;
 
     // Insertion
     void push(const T& item) override {

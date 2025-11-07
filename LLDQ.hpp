@@ -15,7 +15,7 @@ private:
 
 public:
     // Constructor
-    LLDQ();
+    LLDQ() = default;
 
     // Core Insertion Operations
     void pushFront(const T& item) override {
