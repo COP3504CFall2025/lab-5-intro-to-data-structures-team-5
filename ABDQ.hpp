@@ -137,7 +137,7 @@ public:
     // Deletion
     T popFront() override {
         if (size_ == 0) {
-            throw std::out_of_range("No data in deque to pop.");
+            throw std::runtime_error("No data in deque to pop.");
         }
 
         front_ = (front_ + 1) % capacity_;
@@ -146,7 +146,7 @@ public:
     };
     T popBack() override {
         if (size_ == 0) {
-            throw std::out_of_range("No data in deque to pop.");
+            throw std::runtime_error("No data in deque to pop.");
         }
 
         back_ = (back_ - 1) % capacity_;
@@ -157,14 +157,14 @@ public:
     // Access
     const T& front() const override {
         if (size_ == 0) {
-            throw std::out_of_range("No data in deque.");
+            throw std::runtime_error("No data in deque.");
         }
         
         return data_[(front_ + 1) % capacity_];
     };
     const T& back() const override {
         if (size_ == 0) {
-            throw std::out_of_range("No data in deque.");
+            throw std::runtime_error("No data in deque.");
         }
 
         return data_[(back_ - 1) % capacity_];

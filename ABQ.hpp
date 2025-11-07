@@ -59,7 +59,7 @@ public:
             new_arr[i] = rhs.array_[i];
         }
 
-        delete array_;
+        delete[] array_;
         array_ = new_arr;
         capacity_ = rhs.capacity_;
         curr_size_ = rhs.curr_size_;
@@ -82,7 +82,7 @@ public:
             return *this;
         }
 
-        delete array_;
+        delete[] array_;
 
         array_ = rhs.array_;
         capacity_ = rhs.capacity_;
@@ -128,7 +128,7 @@ public:
     // Access
     T peek() const override {
         if (curr_size_ == 0) {
-            throw std::out_of_range("No elements to peek in queue.");
+            throw std::runtime_error("No elements to peek in queue.");
         }
 
         return array_[curr_size_ - 1];
@@ -137,7 +137,7 @@ public:
     // Deletion
     T dequeue() override {
         if (curr_size_ == 0) {
-            throw std::out_of_range("No elements to dequeue.");
+            throw std::runtime_error("No elements to dequeue.");
         }
 
         return array_[--curr_size_];
