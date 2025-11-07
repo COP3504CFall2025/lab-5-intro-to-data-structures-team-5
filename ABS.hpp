@@ -111,14 +111,14 @@ public:
 
     T peek() const override {
         if (curr_size_ == 0) {
-            throw std::out_of_range("No elements to peek in stack.");
+            throw std::runtime_error("No elements to peek in stack.");
         }
         return array_[curr_size_ - 1];
     };
 
     T pop() override {
         if (curr_size_ == 0) {
-            throw std::out_of_range("No elements to pop in stack.");
+            throw std::runtime_error("No elements to pop in stack.");
         }
 
         return array_[--curr_size_];

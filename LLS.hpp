@@ -21,7 +21,7 @@ public:
     // Deletion
     T pop() override {
         if (this->getSize() == 0) {
-            throw std::out_of_range("No data in stack to pop.");
+            throw std::runtime_error("No data in stack to pop.");
         }
         T headVal = list.getHead()->data;   
         list.removeHead();
@@ -31,7 +31,7 @@ public:
     // Access
     T peek() const override {
         if (this->getSize() == 0) {
-            throw std::out_of_range("No data in stack to peek.");
+            throw std::runtime_error("No data in stack to peek.");
         }
         return list.getHead()->data;
     };
