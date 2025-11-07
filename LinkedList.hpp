@@ -23,7 +23,7 @@ private:
 
 public:
 	// Behaviors
-	void PrintForward() const {
+	void printForward() const {
         Node* dummy = head;
         while (dummy != nullptr) {
             std::cout << dummy->data << std::endl;
@@ -31,7 +31,7 @@ public:
         }
     };
 
-	void PrintReverse() const {
+	void printReverse() const {
         Node* dummy = tail;
         while (dummy != nullptr) {
             std::cout << dummy->data << std::endl;
@@ -57,7 +57,7 @@ public:
     };
 
 	// Insertion
-	void AddHead(const T& data) {
+	void addHead(const T& data) {
         Node* new_head = new Node(data, nullptr, head);
         if (head != nullptr) {
             head->prev = new_head;
@@ -68,7 +68,7 @@ public:
         count++;
     };
 
-	void AddTail(const T& data) {
+	void addTail(const T& data) {
         Node* new_tail = new Node(data, tail, nullptr);
         if (tail != nullptr) {
             tail->next = new_tail;
@@ -80,7 +80,7 @@ public:
     };
 
 	// Removal
-	bool RemoveHead() {
+	bool removeHead() {
         if (head == nullptr) {
             return false;
         }
@@ -99,7 +99,7 @@ public:
         return true;
     };
 
-	bool RemoveTail() {
+	bool removeTail() {
         if (tail == nullptr) {
             return false;
         }
@@ -118,9 +118,9 @@ public:
         return true;
     };
 
-	void Clear() {
+	void clear() {
         while (head != nullptr) {
-            RemoveHead();
+            removeHead();
         }
     };
 
@@ -148,7 +148,7 @@ public:
 
         Node* dummy = rhs.head;
         while (dummy != nullptr) {
-            this->AddHead(dummy->data);
+            this->addHead(dummy->data);
             dummy = dummy->next;
         }
 
@@ -162,7 +162,7 @@ public:
 	LinkedList(const LinkedList<T>& list) {
         Node* dummy = list.head;
         while (dummy != nullptr) {
-            this->AddHead(dummy->data); // should set head and tail
+            this->addHead(dummy->data); // should set head and tail
             dummy = dummy->next;
         }
     };
@@ -178,7 +178,7 @@ public:
     };
 
 	~LinkedList() {
-        Clear();
+        clear();
     };
 };
 
