@@ -113,11 +113,11 @@ public:
 
     // Insertion
     void enqueue(const T& data) override {
-        if (curr_size_ + 1 > capacity_) {
+        if (curr_size_ >= capacity_) {
            resize();
         }
  
-        for (size_t i = curr_size_; i >= 0; i--) {
+        for (size_t i = curr_size_; i > 0; i--) {
             // move every element to the right by one
             array_[i] = array_[i-1];
         }

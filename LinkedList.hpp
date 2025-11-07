@@ -2,8 +2,6 @@
 #include <iostream>
 using namespace std;
 
-
-
 template <typename T>
 
 class LinkedList {
@@ -95,6 +93,7 @@ public:
         }
 
         delete old_head;
+        old_head = nullptr;
         count--;
         return true;
     };
@@ -114,6 +113,7 @@ public:
         }
 
         delete old_tail;
+        old_tail = nullptr;
         count--;
         return true;
     };
