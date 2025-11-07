@@ -146,6 +146,7 @@ public:
             return *this;
         }
 
+        clear();
         Node* dummy = rhs.head;
         while (dummy != nullptr) {
             this->addTail(dummy->data);
