@@ -23,7 +23,7 @@ private:
 
 public:
 	// Behaviors
-	void printForward() const {
+	void PrintForward() const {
         Node* dummy = head;
         while (dummy != nullptr) {
             std::cout << dummy->data << std::endl;
@@ -31,7 +31,7 @@ public:
         }
     };
 
-	void printReverse() const {
+	void PrintReverse() const {
         Node* dummy = tail;
         while (dummy != nullptr) {
             std::cout << dummy->data << std::endl;
@@ -57,7 +57,7 @@ public:
     };
 
 	// Insertion
-	void addHead(const T& data) {
+	void AddHead(const T& data) {
         Node* new_head = new Node(data, nullptr, head);
         if (head != nullptr) {
             head->prev = new_head;
@@ -68,7 +68,7 @@ public:
         count++;
     };
 
-	void addTail(const T& data) {
+	void AddTail(const T& data) {
         Node* new_tail = new Node(data, tail, nullptr);
         if (tail != nullptr) {
             tail->next = new_tail;
@@ -80,7 +80,7 @@ public:
     };
 
 	// Removal
-	bool removeHead() {
+	bool RemoveHead() {
         if (head == nullptr) {
             return false;
         }
@@ -99,7 +99,7 @@ public:
         return true;
     };
 
-	bool removeTail() {
+	bool RemoveTail() {
         if (tail == nullptr) {
             return false;
         }
@@ -120,7 +120,7 @@ public:
 
 	void Clear() {
         while (head != nullptr) {
-            removeHead();
+            RemoveHead();
         }
     };
 
@@ -148,7 +148,7 @@ public:
 
         Node* dummy = rhs.head;
         while (dummy != nullptr) {
-            this->addHead(dummy->data);
+            this->AddHead(dummy->data);
             dummy = dummy->next;
         }
 
@@ -162,7 +162,7 @@ public:
 	LinkedList(const LinkedList<T>& list) {
         Node* dummy = list.head;
         while (dummy != nullptr) {
-            this->addHead(dummy->data); // should set head and tail
+            this->AddHead(dummy->data); // should set head and tail
             dummy = dummy->next;
         }
     };
