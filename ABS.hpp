@@ -137,7 +137,7 @@ private:
         for (size_t i = 0; i < curr_size_; i++) {
           new_data[i] = array_[i];  
         }
-        delete array_;
+        delete[] array_;
         array_ = new_data;
     }
 };

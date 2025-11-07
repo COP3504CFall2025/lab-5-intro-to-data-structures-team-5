@@ -173,7 +173,7 @@ public:
         for (size_t i = 0; i < size_; i++) {
           new_data[i] = data_[i];  
         }
-        delete data_;
+        delete[] data_;
         data_ = new_data;
     }
 

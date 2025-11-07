@@ -16,12 +16,12 @@ class ABQ : public QueueInterface<T>{
     static constexpr size_t scale_factor_ = 2;
 
     void resize() {
-        T* new_data = new T[capacity_ * scale_factor_];
         capacity_ *= scale_factor_;
+        T* new_data = new T[capacity_];
         for (size_t i = 0; i < curr_size_; i++) {
           new_data[i] = array_[i];  
         }
-        delete array_;
+        delete[] array_;
         array_ = new_data;
     }
 public:
