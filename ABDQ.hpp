@@ -21,14 +21,14 @@ public:
     ABDQ() : 
         capacity_(4), 
         size_(0),
-        front_(0),
+        front_(capacity_ - 1),
         back_(0),
         data_(new T[capacity_])
     {};
     explicit ABDQ(std::size_t capacity) :
         capacity_(capacity),
         size_(0),
-        front_(0),
+        front_(capacity_ - 1),
         back_(0),
         data_(new T[capacity_])
     {};
