@@ -27,32 +27,40 @@ public:
 
     // Core Removal Operations
     T popFront() override {
-        if (this->getSize() == 0) {
-            throw std::out_of_range("No data in deque to pop.");
+        T headData;
+        if (list.getHead()) {
+            headData = list.getHead()->data;
         }
-        T frontData = list.getHead()->data;
-        list.removeHead();
-        return frontData;
+
+        if (!list.removeHead()) {
+            throw std::runtime_error("Popping head failed.");
+        }
+
+        return headData;
     };
     T popBack() override {
-        if (this->getSize() == 0) {
-            throw std::out_of_range("No data in deque to pop.");
+        T backData;
+        if (list.getTail()) {
+            backData = list.getTail()->data;
         }
-        T backData = list.getTail()->data;
-        list.removeTail();
+
+        if (!list.removeTail()) {
+            throw std::runtime_error("Popping tail failed.");
+        }
+
         return backData;
     };
 
     // Element Accessors
     const T& front() const override {
         if (this->getSize() == 0) {
-            throw std::out_of_range("No data in deque.");
+            throw std::runtime_error("No data in deque.");
         }
         return list.getHead()->data;
     };
     const T& back() const override {
         if (this->getSize() == 0) {
-            throw std::out_of_range("No data in deque.");
+            throw std::runtime_error("No data in deque.");
         }
         return list.getTail()->data;
     };
