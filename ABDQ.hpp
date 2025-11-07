@@ -101,7 +101,7 @@ public:
     };
 
     ~ABDQ() override {
-        delete data_;
+        delete[] data_;
         data_ = nullptr;
         capacity_ = 0;
         size_ = 0;

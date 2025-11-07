@@ -81,7 +81,7 @@ public:
     };
 
     ~ABS() noexcept override {
-        delete array_;
+        delete[] array_;
         array_ = nullptr;
         capacity_ = 0;
         curr_size_ = 0;
