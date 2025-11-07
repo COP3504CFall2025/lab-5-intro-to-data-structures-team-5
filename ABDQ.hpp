@@ -66,7 +66,7 @@ public:
 
         T* new_data = new T[other.capacity_];
 
-        for (size_t i = 0; i < other.capacity_; i++) {
+        for (std::size_t i = 0; i < other.capacity_; i++) {
             new_data[i] = other.data_[i];
         }
 
@@ -111,7 +111,7 @@ public:
 
     // Insertion
     void pushFront(const T& item) override {
-        if ((back_ + 1) % capacity_ == front_) { // full
+        if (size_ == capacity_) { // full
             // should we not do this, and just overwrite data?
             throw std::overflow_error("Deque is full. Please resize first with ensureCapacity()");
         }
@@ -119,47 +119,51 @@ public:
         // bc of how we do this and pushBack
         // accessing requires looking at next/prev element
         // from given index
-        data_[front_] = item;
         front_ = (front_ - 1) % capacity_;
+        data_[front_] = item;
+        size_++;
     };
     void pushBack(const T& item) override { 
-        if ((back_ + 1) % capacity_ == front_) { // full
+        if (size_ == capacity_) { // full
             // should we not do this, and just overwrite data?
             throw std::overflow_error("Deque is full. Please resize first with ensureCapacity()");
         }
 
         data_[back_] = item;
         back_ = (back_ + 1) % capacity_; // set back to next element; if past capacity then it should circle around to front of array
+        size_++;
     };
 
     // Deletion
     T popFront() override {
-        if (front_ == back_) {
+        if (size_ == 0) {
             throw std::out_of_range("No data in deque to pop.");
         }
 
         front_ = (front_ + 1) % capacity_;
+        size_--;
         return data_[front_];
     };
     T popBack() override {
-        if (front_ == back_) {
+        if (size_ == 0) {
             throw std::out_of_range("No data in deque to pop.");
         }
 
         back_ = (back_ - 1) % capacity_;
+        size_--;
         return data_[back_];
     };
 
     // Access
     const T& front() const override {
-        if (front_ == back_) {
+        if (size_ == 0) {
             throw std::out_of_range("No data in deque.");
         }
         
         return data_[(front_ + 1) % capacity_];
     };
     const T& back() const override {
-        if (front_ == back_) {
+        if (size_ == 0) {
             throw std::out_of_range("No data in deque.");
         }
 
@@ -168,24 +172,35 @@ public:
 
     // Size Regulators
     void ensureCapacity() {
-        T* new_data = new T[capacity_ * 2];
-        capacity_ *= 2;
-        for (size_t i = 0; i < size_; i++) {
-          new_data[i] = data_[i];  
+        if (size_ < capacity_) return;
+
+
+        T* new_data = new T[capacity_ * SCALE_FACTOR];
+        capacity_ *= SCALE_FACTOR;
+
+        for (std::size_t i = 0; i < size_; i++) {
+            std::size_t old_index = (front_ + 1 + i) % capacity_; 
+            new_data[i] = data_[old_index];  
         }
+
         delete[] data_;
         data_ = new_data;
+        front_ = capacity_ - 1;
+        back_ = size_;
     }
 
     void shrinkIfNeeded() {
-        if (size_ < capacity_/2) {
-            T* new_data = new T[capacity_/2];
-            capacity_ /= 2;
-            for (size_t i = 0; i < size_; i++) {
-                new_data[i] = data_[i];
+        if (size_ < capacity_ / (SCALE_FACTOR * SCALE_FACTOR) && capacity_ > 4) {
+            T* new_data = new T[capacity_/SCALE_FACTOR];
+            capacity_ /= SCALE_FACTOR;
+            for (std::size_t i = 0; i < size_; i++) {
+                std::size_t old_index = (front_ + 1 + i) % capacity_;
+                new_data[i] = data_[old_index];
             }
-            delete data_;
+            delete[] data_;
             data_ = new_data;
+            front_ = capacity_ - 1;
+            back_ = size_;
         }
     }
 
