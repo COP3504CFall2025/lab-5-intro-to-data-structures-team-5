@@ -148,7 +148,7 @@ public:
 
         Node* dummy = rhs.head;
         while (dummy != nullptr) {
-            this->addHead(dummy->data);
+            this->addTail(dummy->data);
             dummy = dummy->next;
         }
 
@@ -162,7 +162,7 @@ public:
 	LinkedList(const LinkedList<T>& list) {
         Node* dummy = list.head;
         while (dummy != nullptr) {
-            this->addHead(dummy->data); // should set head and tail
+            this->addTail(dummy->data); // should set head and tail
             dummy = dummy->next;
         }
     };
