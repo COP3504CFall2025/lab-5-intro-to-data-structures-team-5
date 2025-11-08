@@ -24,6 +24,19 @@ class ABQ : public QueueInterface<T>{
         delete[] array_;
         array_ = new_data;
     }
+
+    void shrink() {
+        size_t new_capacity = capacity_ / scale_factor_;
+        if (new_capacity < 1) new_capacity = 1;
+        
+        T* new_data = new T[new_capacity];
+        for (size_t i = 0; i < curr_size_; i++) {
+            new_data[i] = array_[i];
+        }
+        delete[] array_;
+        array_ = new_data;
+        capacity_ = new_capacity;
+    }
 public:
     // Constructors + Big 5
     ABQ() :
@@ -138,6 +151,10 @@ public:
     T dequeue() override {
         if (curr_size_ == 0) {
             throw std::runtime_error("No elements to dequeue.");
+        }
+
+        if (capacity_ > 1 && curr_size_ <= capacity_ / 2) {
+                shrink();
         }
 
         return array_[--curr_size_];
