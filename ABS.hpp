@@ -120,9 +120,9 @@ public:
         if (curr_size_ == 0) {
             throw std::runtime_error("No elements to pop in stack.");
         }
-
-        if (curr_size_ > 0 && curr_size_ <= capacity_ / 4 && capacity_ > 1) {
-            shrink();
+        
+        if (capacity_ > 1 && curr_size_ <= capacity_ / 4) {
+                shrink();
         }
 
         return array_[--curr_size_];
