@@ -114,9 +114,8 @@ public:
 
     // Insertion
     void pushFront(const T& item) override {
-        if (size_ == capacity_) { // full
-            // should we not do this, and just overwrite data?
-            throw std::overflow_error("Deque is full. Please resize first with ensureCapacity()");
+        if (size_ == capacity_) { // full 
+            ensureCapacity();
         }
 
         // bc of how we do this and pushBack
@@ -128,8 +127,7 @@ public:
     };
     void pushBack(const T& item) override { 
         if (size_ == capacity_) { // full
-            // should we not do this, and just overwrite data?
-            throw std::overflow_error("Deque is full. Please resize first with ensureCapacity()");
+            ensureCapacity();
         }
 
         data_[back_] = item;
@@ -143,6 +141,8 @@ public:
             throw std::runtime_error("No data in deque to pop.");
         }
 
+        shrinkIfNeeded();
+
         front_ = (front_ + 1) % capacity_;
         size_--;
         return data_[front_];
@@ -151,6 +151,9 @@ public:
         if (size_ == 0) {
             throw std::runtime_error("No data in deque to pop.");
         }
+
+        shrinkIfNeeded();
+
 
         back_ = (back_ == 0) ? capacity_ - 1 : back_ - 1;
         size_--;
