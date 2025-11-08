@@ -70,7 +70,7 @@ public:
             new_data[i] = other.data_[i];
         }
 
-        delete data_;
+        delete[] data_;
         data_ = new_data;
         capacity_ = other.capacity_;
         size_ = other.size_;

@@ -44,7 +44,7 @@ public:
             new_arr[i] = rhs.array_[i];
         }
 
-        delete array_;
+        delete[] array_;
         array_ = new_arr;
         capacity_ = rhs.capacity_;
         curr_size_ = rhs.curr_size;
@@ -67,7 +67,7 @@ public:
             return *this;
         }
 
-        delete array_;
+        delete [] array_;
 
         array_ = rhs.array_;
         capacity_ = rhs.capacity_;
