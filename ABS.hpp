@@ -121,7 +121,7 @@ public:
             throw std::runtime_error("No elements to pop in stack.");
         }
         
-        if (capacity_ > 1 && curr_size_ <= capacity_ / 4) {
+        if (capacity_ > 1 && curr_size_ <= capacity_ / 2) {
                 shrink();
         }
 
