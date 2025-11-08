@@ -196,7 +196,7 @@ public:
     }
 
     void shrinkIfNeeded() {
-        if (size_ < capacity_ / (SCALE_FACTOR * SCALE_FACTOR) && capacity_ > 4) {
+        if (capacity_ > 1 && size_ <= capacity_ / 2) {
             T* new_data = new T[capacity_/SCALE_FACTOR];
             for (std::size_t i = 0; i < size_; i++) {
                 std::size_t old_index = (front_ + 1 + i) % capacity_;
