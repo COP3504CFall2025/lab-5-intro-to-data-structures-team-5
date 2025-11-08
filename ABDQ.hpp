@@ -121,8 +121,8 @@ public:
         // bc of how we do this and pushBack
         // accessing requires looking at next/prev element
         // from given index
-        front_ = (front_ == 0) ? capacity_ - 1 : front_ - 1;
         data_[front_] = item;
+        front_ = (front_ == 0) ? capacity_ - 1 : front_ - 1;
         size_++;
     };
     void pushBack(const T& item) override { 
@@ -141,23 +141,27 @@ public:
             throw std::runtime_error("No data in deque to pop.");
         }
 
-        shrinkIfNeeded();
 
         front_ = (front_ + 1) % capacity_;
+        T result = data_[front_];
         size_--;
-        return data_[front_];
+
+        shrinkIfNeeded();
+
+        return result;
     };
     T popBack() override {
         if (size_ == 0) {
             throw std::runtime_error("No data in deque to pop.");
         }
 
+        back_ = (back_ == 0) ? capacity_ - 1 : back_ - 1;
+        T result = data_[back_];
+        size_--;
+
         shrinkIfNeeded();
 
-
-        back_ = (back_ == 0) ? capacity_ - 1 : back_ - 1;
-        size_--;
-        return data_[back_];
+        return result;
     };
 
     // Access
@@ -204,8 +208,8 @@ public:
             }
             delete[] data_;
             data_ = new_data;
-            front_ = capacity_ - 1;
             capacity_ /= SCALE_FACTOR;
+            front_ = capacity_ - 1;
             back_ = size_;
         }
     }
