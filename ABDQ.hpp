@@ -19,18 +19,19 @@ private:
 public:
     // Big 5
     ABDQ() : 
+        data_(new T[4]),
         capacity_(4), 
         size_(0),
-        front_(capacity_ - 1),
-        back_(0),
-        data_(new T[capacity_])
+        front_(3),
+        back_(0)
     {};
+
     explicit ABDQ(std::size_t capacity) :
+        data_(new T[capacity]),
         capacity_(capacity),
         size_(0),
-        front_(capacity_ - 1),
-        back_(0),
-        data_(new T[capacity_])
+        front_(capacity - 1),
+        back_(0)
     {};
 
     ABDQ(const ABDQ& other) {
@@ -85,6 +86,8 @@ public:
             return *this;
         }
 
+        delete[] data_;
+
         data_ = other.data_;
         capacity_ = other.capacity_;
         size_ = other.size_;
@@ -119,7 +122,7 @@ public:
         // bc of how we do this and pushBack
         // accessing requires looking at next/prev element
         // from given index
-        front_ = (front_ - 1) % capacity_;
+        front_ = (front_ == 0) ? capacity_ - 1 : front_ - 1;
         data_[front_] = item;
         size_++;
     };
@@ -149,7 +152,7 @@ public:
             throw std::runtime_error("No data in deque to pop.");
         }
 
-        back_ = (back_ - 1) % capacity_;
+        back_ = (back_ == 0) ? capacity_ - 1 : back_ - 1;
         size_--;
         return data_[back_];
     };
@@ -167,7 +170,7 @@ public:
             throw std::runtime_error("No data in deque.");
         }
 
-        return data_[(back_ - 1) % capacity_];
+        return data_[(back_ == 0) ? capacity_ - 1 : back_ - 1;];
     };
 
     // Size Regulators
@@ -176,7 +179,6 @@ public:
 
 
         T* new_data = new T[capacity_ * SCALE_FACTOR];
-        capacity_ *= SCALE_FACTOR;
 
         for (std::size_t i = 0; i < size_; i++) {
             std::size_t old_index = (front_ + 1 + i) % capacity_; 
@@ -185,6 +187,7 @@ public:
 
         delete[] data_;
         data_ = new_data;
+        capacity_ *= SCALE_FACTOR;
         front_ = capacity_ - 1;
         back_ = size_;
     }
@@ -192,7 +195,6 @@ public:
     void shrinkIfNeeded() {
         if (size_ < capacity_ / (SCALE_FACTOR * SCALE_FACTOR) && capacity_ > 4) {
             T* new_data = new T[capacity_/SCALE_FACTOR];
-            capacity_ /= SCALE_FACTOR;
             for (std::size_t i = 0; i < size_; i++) {
                 std::size_t old_index = (front_ + 1 + i) % capacity_;
                 new_data[i] = data_[old_index];
@@ -200,6 +202,7 @@ public:
             delete[] data_;
             data_ = new_data;
             front_ = capacity_ - 1;
+            capacity_ /= SCALE_FACTOR;
             back_ = size_;
         }
     }
