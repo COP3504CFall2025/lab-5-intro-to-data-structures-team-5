@@ -170,7 +170,7 @@ public:
             throw std::runtime_error("No data in deque.");
         }
 
-        return data_[(back_ == 0) ? capacity_ - 1 : back_ - 1;];
+        return data_[(back_ == 0) ? capacity_ - 1 : back_ - 1];
     };
 
     // Size Regulators
